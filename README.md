@@ -6,4 +6,5 @@
 
 ## Proyecto: Contador de dos digitos.
 
-! (https://github.com/sebastiansobrino/primerParcialSpd/blob/main/Circuito/Trabajo_parte_1.png)
+[![Trabajo-parte-1.png](https://i.postimg.cc/Pqc3Sm8Z/Trabajo-parte-1.png)](https://postimg.cc/R37LFJdV)
+
