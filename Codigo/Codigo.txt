@@ -1,0 +1,159 @@
+// C++ code
+//Diseñar un contador de 0 a 99 utilizando dos displays de 7 segmentos y tres botones para
+//controlar la cuenta. Debes implementar la técnica de multiplexación para mostrar los dígitos
+//en los displays. El contador debe comenzar en 0 y debe ser capaz de aumentar o disminuir
+//su valor en una unidad con los botones.
+
+// Definimos todos los pin que utilizaremos para el proyecto
+#define A 10
+#define B 11
+#define C 5
+#define D 6
+#define E 7
+#define F 9
+#define G 8
+
+#define UNIDAD A4
+#define DECENA A5
+#define RESET 2
+#define SUMA 4
+#define DISMINUYE 3
+
+
+// Inicializamos el contador que servira de guia para el display y 
+//los enteros que usaremos para leer los botores que sumaran, restaran o resetearan el contador
+int contador = 0;
+int reset;
+int sumar;
+int restar;
+
+// En la funcion Setup, configuramos los display y el estado de cada led.
+void setup()
+{
+	for(int i = 5; i <= 11; i++)
+    {
+      configurarDisplay(0,0,0,0,0,0,0);
+      configurarEstadoLed(i, OUTPUT);
+    }       
+  pinMode(4, INPUT_PULLUP);		
+  pinMode(3, INPUT_PULLUP);		
+  pinMode(2, INPUT_PULLUP);		
+  pinMode(A4, OUTPUT);			
+  pinMode(A5, OUTPUT);			  
+}
+
+
+
+// Dentro de nuestra funcion loop manejaremos las variables que leen el valor de los botones para saber si se presionan o no, de esta forma sumar, restar o resetar al contador 
+//dependiendo lo que presione el usuario
+void loop() {      
+
+  reset = digitalRead(RESET);
+  sumar = digitalRead(SUMA);
+  restar = digitalRead(DISMINUYE);
+  
+  if(sumar == 0)
+  {
+  	contador++;
+   
+      if(contador > 99)
+    {
+      contador = 0;
+    }
+  }
+  
+  if(restar == 0)
+  {
+    contador--;
+    if(contador < 0)
+    {
+      contador = 99;
+    }
+  }
+  
+  if(reset == 0)
+  {
+     contador = 0;
+  } 
+  
+  prenderLuces(contador);
+}
+
+
+
+void prenderLuces(int contador)
+{
+  dibujarNumero(contador/10); // Muestra la primera cifra del contador en el primer display
+  prenderDisplay(1,0);       // Enciende la decena y apaga la unidad
+  delay(50);                  // Espera un corto período de tiempo
+
+  dibujarNumero(contador % 10); // Muestra la segunda cifra del contador en el segundo display
+  prenderDisplay(0,1);         // enciende la unidad y apaga la decena
+  delay(50);                    // Espera un corto período de tiempo
+}
+
+
+
+void dibujarNumero(int numero) {
+  switch (numero) {  // Comienza el bloque switch y se evalúa el valor de numero. Dependiendo el valor numero, configura el display para dibujar ese digito.
+    case 0:
+      configurarDisplay(1, 1, 1, 1, 1, 1, 0);
+      break;  
+    case 1:
+      configurarDisplay(0, 1, 1, 0, 0, 0, 0);  
+      break;
+    case 2:
+      configurarDisplay(1, 1, 0, 1, 1, 0, 1);  
+      break;
+    case 3:
+      configurarDisplay(1, 1, 1, 1, 0, 0, 1);
+      break;
+    case 4:
+      configurarDisplay(0, 1, 1, 0, 0, 1, 1);
+      break;
+    case 5:
+      configurarDisplay(1, 0, 1, 1, 0, 1, 1);
+      break;
+    case 6:
+      configurarDisplay(1, 0, 1, 1, 1, 1, 1);
+      break;
+    case 7:
+      configurarDisplay(1, 1, 1, 0, 0, 0, 0);
+      break;
+    case 8:
+      configurarDisplay(1, 1, 1, 1, 1, 1, 1);
+      break;
+    case 9:
+      configurarDisplay(1, 1, 1, 1, 0, 1, 1);
+      break;
+    default: // Si numero no coincide con ningún caso, se ejecuta esta parte.
+      break;
+  }
+}
+  	
+
+
+//Esta funcion permite controlar el estado de cada segmento dentro del display para manejar cual se enciente y cual no.
+void configurarDisplay(int a, int b, int c, int d, int e, int f, int g)
+{
+  digitalWrite(A,a);
+  digitalWrite(B,b);
+  digitalWrite(C,c);
+  digitalWrite(D,d);
+  digitalWrite(E,e);
+  digitalWrite(F,f);
+  digitalWrite(G,g);
+}
+
+
+// Esta función se encarga de encender o apagar los displays de unidades y decenas.
+void prenderDisplay(int display1, int display2){
+
+  digitalWrite(UNIDAD, display1);
+  digitalWrite(DECENA, display2);
+}
+//Esta función se utiliza para configurar el estado (entrada o salida) de un LED conectado a un pin específico.
+void configurarEstadoLed(int led, int estado)
+{
+  pinMode(led, estado);
+}
