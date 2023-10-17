@@ -87,14 +87,14 @@ void loop() {
 
 //La multiplexación es una técnica que permite controlar varios dispositivos utilizando un número limitado de pines. En nuestro caso se están utilizando dos displays de siete segmentos, 
 //y la multiplexación se realiza para mostrar los dígitos en cada uno de ellos de manera alternada dibujando un numero y prendiendo el display correspondiente.
-
+// 
 void prenderLuces(int numero)
 {
-  dibujarNumero(numero/10); // Muestra la primera cifra del contador en el primer display
+  dibujarNumero(numero/10); // Muestra la primera cifra del contador en el primer display. Ej: Si es menor a 10, el display dibujara un 0 en la decena
   prenderDisplay(1,0);       // Enciende la decena y apaga la unidad
   delay(50);                  // Espera un corto período de tiempo
 
-  dibujarNumero(numero % 10); // Muestra la segunda cifra del contador en el segundo display
+  dibujarNumero(numero % 10); // Muestra la segunda cifra del contador en el segundo display. Toma el sobrante de la cuenta realizada para dibujarlo en la unidad.
   prenderDisplay(0,1);         // enciende la unidad y apaga la decena
   delay(50);                    // Espera un corto período de tiempo
 }
