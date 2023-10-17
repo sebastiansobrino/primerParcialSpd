@@ -27,6 +27,12 @@ int reset;
 int sumar;
 int restar;
 
+void prenderLuces(int numero);
+void dibujarNumero(int numero);
+void configurarDisplay(int a, int b, int c, int d, int e, int f, int g);
+void prenderDisplay(int display1, int display2);
+void configurarEstadoLed(int led, int estado);
+  
 // En la funcion Setup, configuramos los display y el estado de cada led.
 void setup()
 {
@@ -81,13 +87,13 @@ void loop() {
 
 
 
-void prenderLuces(int contador)
+void prenderLuces(int numero)
 {
-  dibujarNumero(contador/10); // Muestra la primera cifra del contador en el primer display
+  dibujarNumero(numero/10); // Muestra la primera cifra del contador en el primer display
   prenderDisplay(1,0);       // Enciende la decena y apaga la unidad
   delay(50);                  // Espera un corto período de tiempo
 
-  dibujarNumero(contador % 10); // Muestra la segunda cifra del contador en el segundo display
+  dibujarNumero(numero % 10); // Muestra la segunda cifra del contador en el segundo display
   prenderDisplay(0,1);         // enciende la unidad y apaga la decena
   delay(50);                    // Espera un corto período de tiempo
 }
