@@ -1,0 +1,256 @@
+// C++ code
+//1. Sustituye uno de los botones por un interruptor deslizante (switch) de dos posiciones.
+//Dependiendo de la posición del interruptor, el display debe mostrar o bien el contador (como
+//en la Parte 1) o los números primos en el rango de 0 a 99.
+// 2.Investigar en la semana y agregar uno de los siguientes componentes
+
+// Definimos todos los pin que utilizaremos para el proyecto
+#define A 10
+#define B 11
+#define C 5
+#define D 6
+#define E 7
+#define F 9
+#define G 8
+
+#define UNIDAD A4
+#define DECENA A5
+#define INTERRUPTOR 2
+#define SUMA 4
+#define DISMINUYE 3
+#define SENSOR  A0
+
+// Inicializamos el contador que servira de guia para el display y 
+//los enteros que usaremos para leer los botores que sumaran, restaran el contador, el contador que servira de guia para los numeros primos
+// asi como las funciones que se usaran para llevar a cabo el proceso.
+int contador = 0;
+int contadorPrimo = 2;
+int numeroAuxiliar = 0;
+int obtenerNumerosPrimos(int numero,int numeroDos);
+bool verificarNumeroPrimo(int numero);
+void prenderLuces(int numero);
+void dibujarNumero(int numero);
+void configurarDisplay(int a, int b, int c, int d, int e, int f, int g);
+void prenderDisplay(int display1, int display2);
+void configurarEstadoLed(int led, int estado);
+  
+
+
+int interruptor;
+int sumar;
+int restar;
+int sensor;
+
+// En la funcion Setup, configuramos los display y el estado de cada led.
+void setup()
+{
+	for(int i = 5; i <= 11; i++)
+    {
+      configurarDisplay(0,0,0,0,0,0,0);
+      configurarEstadoLed(i, OUTPUT);
+    }       
+  pinMode(4, INPUT_PULLUP);		
+  pinMode(3, INPUT_PULLUP);		
+  pinMode(2, INPUT_PULLUP);		
+  pinMode(A4, OUTPUT);			
+  pinMode(A5, OUTPUT);
+  pinMode(A1, OUTPUT);
+}
+
+
+//En la funcion principal, leemos el estado de los botones asi como del interruptor que nos avisa si el contador sera de numeros enteros o primos y el sensor de fuerza.
+// Si el sensor posee un valor mayor a 90, el contador permite sumar o restar numeros (Ya sea primos o enteros dependiendo del valor del interruptor.
+// En caso de que el sensor de fuerza sea menor a 90, el contador queda estancado en 0 hasta que se ejerza una fuerza mayor.
+void loop() {      
+
+  interruptor = digitalRead(INTERRUPTOR);
+  sumar = digitalRead(SUMA);
+  sensor = analogRead(SENSOR);
+  restar = digitalRead(DISMINUYE);
+  
+  
+  if (sensor > 90)
+  {
+    if(interruptor == 1)
+    {
+      if(sumar == 0)
+      {
+        contador++;
+
+        if(contador > 99)
+        {
+          contador = 0;
+        }
+      }
+
+      if(restar == 0)
+      {
+        contador--;
+        if(contador < 0)
+        {
+          contador = 99;
+        }
+      }
+
+
+      prenderLuces(contador);
+    }
+
+    else
+    {
+      if (verificarNumeroPrimo(contadorPrimo))
+      {
+
+        if(sumar == 0)
+        {
+          numeroAuxiliar = 1;
+          contadorPrimo++;
+
+          if(contadorPrimo > 97)
+          {
+            contadorPrimo = 2;
+          }
+        }
+        else if(restar == 0)
+        {
+          numeroAuxiliar = 0;
+          contadorPrimo--;
+
+          if(contadorPrimo < 2)
+          {
+            contadorPrimo = 97;
+          }
+        }
+      }
+      else 
+      {
+        contadorPrimo = obtenerNumerosPrimos(contadorPrimo,numeroAuxiliar);
+      }
+
+      prenderLuces(contadorPrimo);
+    }
+  }
+  else
+  {
+    contador = 0;
+    prenderLuces(contador);
+  }
+  
+}
+
+
+//La multiplexación es una técnica que permite controlar varios dispositivos utilizando un número limitado de pines. En nuestro caso se están utilizando dos displays de siete segmentos, 
+//y la multiplexación se realiza para mostrar los dígitos en cada uno de ellos de manera alternada dibujando un numero y prendiendo el display correspondiente.
+
+void prenderLuces(int numero)
+{
+  dibujarNumero(numero/10); // Muestra la primera cifra del contador en el primer display. Ej: Si es menor a 10, el display dibujara un 0 en la decena
+  prenderDisplay(1,0);       // Enciende la decena y apaga la unidad
+  delay(50);                  // Espera un corto período de tiempo
+
+  dibujarNumero(numero % 10); // Muestra la segunda cifra del contador en el segundo display. Toma el sobrante de la cuenta realizada para dibujarlo en la unidad.
+  prenderDisplay(0,1);         // enciende la unidad y apaga la decena
+  delay(50);                    // Espera un corto período de tiempo
+}
+
+
+void dibujarNumero(int numero) {
+  switch (numero) {  // Comienza el bloque switch y se evalúa el valor de numero. Dependiendo el valor numero, configura el display para dibujar ese digito.
+    case 0:
+      configurarDisplay(1, 1, 1, 1, 1, 1, 0);
+      break;  
+    case 1:
+      configurarDisplay(0, 1, 1, 0, 0, 0, 0);  
+      break;
+    case 2:
+      configurarDisplay(1, 1, 0, 1, 1, 0, 1);  
+      break;
+    case 3:
+      configurarDisplay(1, 1, 1, 1, 0, 0, 1);
+      break;
+    case 4:
+      configurarDisplay(0, 1, 1, 0, 0, 1, 1);
+      break;
+    case 5:
+      configurarDisplay(1, 0, 1, 1, 0, 1, 1);
+      break;
+    case 6:
+      configurarDisplay(1, 0, 1, 1, 1, 1, 1);
+      break;
+    case 7:
+      configurarDisplay(1, 1, 1, 0, 0, 0, 0);
+      break;
+    case 8:
+      configurarDisplay(1, 1, 1, 1, 1, 1, 1);
+      break;
+    case 9:
+      configurarDisplay(1, 1, 1, 1, 0, 1, 1);
+      break;
+    default: // Si numero no coincide con ningún caso, se ejecuta esta parte.
+      break;
+  }
+}
+
+//Esta funcion permite controlar el estado de cada segmento dentro del display para manejar cual se enciente y cual no.
+void configurarDisplay(int a, int b, int c, int d, int e, int f, int g)
+{
+  digitalWrite(A,a);
+  digitalWrite(B,b);
+  digitalWrite(C,c);
+  digitalWrite(D,d);
+  digitalWrite(E,e);
+  digitalWrite(F,f);
+  digitalWrite(G,g);
+}
+
+
+
+// Esta función se encarga de encender o apagar los displays de unidades y decenas.
+void prenderDisplay(int display1, int display2){
+
+  digitalWrite(UNIDAD, display1);
+  digitalWrite(DECENA, display2);
+}
+
+//Esta función se utiliza para configurar el estado (entrada o salida) de un LED conectado a un pin específico.
+void configurarEstadoLed(int led, int estado)
+{
+  pinMode(led, estado);
+}
+
+//Esta función verificarNumeroPrimo determina si un número es primo. Si el número es menor o igual a 1, retorna false. 
+//Luego, verifica si es divisible por algún número en el rango de 2 a su raíz cuadrada. 
+//Si se encuentra un divisor, devuelve false; de lo contrario, devuelve true, indicando si el número es primo.
+bool verificarNumeroPrimo(int numero)
+{
+    if (numero <= 1) 
+    {
+        return false;
+    }
+    for (int i = 2; i * i <= numero; i++) 
+    {
+        if (numero % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+// Esta funcion permite obtener un numero primo. Primero se le ingresa un numero que sera el contador de nuestro display 
+//para que se le sume o reste hasta llegar al proximo numero primo. La variable numeroDos es una bandera que nos avisa si se suma o se resta al numero.
+int obtenerNumerosPrimos(int numero,int numeroDos)
+{
+  
+  while (verificarNumeroPrimo(numero) == false)
+  {
+    if (numeroDos == 1)
+    {
+      numero ++;
+    }
+    else if (numeroDos == 0)
+    {
+      numero --;
+    }
+  }
+  return numero;
+}
