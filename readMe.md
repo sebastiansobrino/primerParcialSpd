@@ -146,6 +146,7 @@ void loop() {
 ```
 ## Modificaciones y comoponentes adicionales.
 Para esta segunda parte se agrego un sensor de fuerza que permite detectar la cantidad de fuerza que se ejerce. Su funcion en el proyecto consiste en permitir el uso del contador y sus botones dependiendo la fuerza que este capte. En caso de que el sensor tome una fuerza superior a los 4 N, el usuario podra utilizar cualquiera de los botones para modificar el contador. Caso contrario, si la fuerza no supera ese minimo, el contador quedara estatico en 0.
+
 Un componente adicional que se podria integrar al proyecto para mejorarlo seria el motor de aficionado. Es un dispositivo electromecánico que convierte la energía eléctrica en movimiento mecánico rotativo. Está diseñado para funcionar a velocidades variables, lo que lo hace adecuado para proyectos donde se requiere el control preciso de la velocidad. Una forma de integrarlo al proyecto seria usarlo como parametro visual del aumento o disminucion del contador. En caso de que el contador suba, la velocidad del motor subira. Si el contador disminuye, tambien lo hara el motor.
 
 ## Link al proyecto
