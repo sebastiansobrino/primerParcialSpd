@@ -85,7 +85,8 @@ void loop() {
   prenderLuces(contador);
 }
 
-
+//La multiplexación es una técnica que permite controlar varios dispositivos utilizando un número limitado de pines. En nuestro caso se están utilizando dos displays de siete segmentos, 
+//y la multiplexación se realiza para mostrar los dígitos en cada uno de ellos de manera alternada dibujando un numero y prendiendo el display correspondiente.
 
 void prenderLuces(int numero)
 {
