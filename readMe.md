@@ -63,7 +63,7 @@ https://www.tinkercad.com/things/9I9aw647I0a-trabajoparte1/editel?sharecode=m3-G
 Para esta segunda parte se Sustituye uno de los botones por un interruptor deslizante (switch) de dos posiciones.
 Dependiendo de la posición del interruptor, el display debe mostrar o bien el contador (como en la Parte 1) o los números primos en el rango de 0 a 99. 
 
-##Función principal
+## Función principal
 En la funcion principal, leemos el estado de los botones asi como del interruptor que nos avisa si el contador sera de numeros enteros o primos y el sensor de fuerza.
 Si el sensor posee un valor mayor a 90, el contador permite sumar o restar numeros (Ya sea primos o enteros dependiendo del valor del interruptor.
 En caso de que el sensor de fuerza sea menor a 90, el contador queda estancado en 0 hasta que se ejerza una fuerza mayor.
@@ -144,3 +144,10 @@ void loop() {
   }
 }
 ```
+## Modificaciones y comoponentes adicionales.
+Para esta segunda parte se agrego un sensor de fuerza que permite detectar la cantidad de fuerza que se ejerce. Su funcion en el proyecto consiste en permitir el uso del contador y sus botones dependiendo la fuerza que este capte. En caso de que el sensor tome una fuerza superior a los 4 N, el usuario podra utilizar cualquiera de los botones para modificar el contador. Caso contrario, si la fuerza no supera ese minimo, el contador quedara estatico en 0.
+Un componente adicional que se podria integrar al proyecto para mejorarlo seria el motor de aficionado. Es un dispositivo electromecánico que convierte la energía eléctrica en movimiento mecánico rotativo. Está diseñado para funcionar a velocidades variables, lo que lo hace adecuado para proyectos donde se requiere el control preciso de la velocidad. Una forma de integrarlo al proyecto seria usarlo como parametro visual del aumento o disminucion del contador. En caso de que el contador suba, la velocidad del motor subira. Si el contador disminuye, tambien lo hara el motor.
+
+## Link al proyecto
+
+https://www.tinkercad.com/things/430neKav5gY-trabajopartedos/editel?sharecode=RwcGpelVcMMDU0PCWGOCcKOKnmYCw1Bsvba_B7HmY1Q
