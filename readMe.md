@@ -274,3 +274,12 @@ Una fotoresistencia es un componente electrónico que cambia su resistencia elé
 ## Link al proyecto
 
 https://www.tinkercad.com/things/hEzW1mVNeFj-trabajopartetres/editel?sharecode=w4j9loCLPL3Yih_YujR5-KS927g_7mwelvu0srSY2fM
+
+# Cuarta parte
+
+## Modificacion 
+Si tu número de documento termina en (0-3) deberás implementar a tu proyecto que el interruptor deslizante de la parte dos tenga la función de encender y apagar el sistema, solo mostrando los números primos.
+
+## Link al proyecto
+
+https://www.tinkercad.com/things/lyEMjNNaLw8-trabajopartecuatro/editel?sharecode=8zTa_GW4WMMf-VTt1cJTvC-gk8dzhnvn0tgHSh_XVuM
