@@ -3,6 +3,10 @@
 ## Integrantes
 
 * Sebastian L. Sobrino
+* Lautaro Testa
+* Tomas del Rio
+* Valentina Vanesa Cisneros
+* Francisco Belen
 
 ## Proyecto: Contador de dos digitos.
 
