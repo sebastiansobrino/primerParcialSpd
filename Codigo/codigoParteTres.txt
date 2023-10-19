@@ -37,6 +37,14 @@ int sensor;
 int luz;
 int tiempoUltimaActividad = 0; //Iniciamos una variable para saber la ultima vez que se realizo una accion en el contador
 bool enSuspension = false;
+int obtenerNumerosPrimos(int numero,int numeroDos);
+bool verificarNumeroPrimo(int numero);
+void prenderLuces(int numero);
+void dibujarNumero(int numero);
+void configurarDisplay(int a, int b, int c, int d, int e, int f, int g);
+void prenderDisplay(int display1, int display2);
+void configurarEstadoLed(int led, int estado);
+  
 
 
 void setup()
